@@ -1,32 +1,48 @@
 import pandas as pd
 from sklearn.preprocessing import LabelEncoder
 
-# Load the dataset from CSV
-df = pd.read_csv('dataset.csv')
+# Load the dataset
+file_path = 'dataset.csv'
+df = pd.read_csv(file_path)
 
-# Function to check if a column is binary (has only 2 unique values)
-def is_binary(column):
-    return len(df[column].unique()) == 2
+# Handle missing values: choose one method
+# Option 1: Drop rows with missing values
+# df = df.dropna()
 
-# Identify categorical columns (assuming they are of object/string type)
-categorical_columns = df.select_dtypes(include=['object']).columns
+# Option 2: Fill missing values with a constant
+#df = df.fillna(0)  # You can also use 'unknown' for categorical columns if necessary
+
+# Option 3: Fill missing numeric values with the column mean, and categorical with the mode
+for col in df.columns:
+    if df[col].dtype == 'object':  # For categorical columns
+        df[col].fillna(df[col].mode()[0], inplace=True)
+    else:  # For numeric columns
+        df[col].fillna(df[col].mean(), inplace=True)
+
+# Clean unnecessary "Unnamed" columns
+df_cleaned = df.loc[:, ~df.columns.str.contains('^Unnamed')]
+
+# Identify categorical columns
+categorical_columns = df_cleaned.select_dtypes(include=['object']).columns
 
 # Separate binary and multi-category columns
-binary_columns = [col for col in categorical_columns if is_binary(col)]
-multi_category_columns = [col for col in categorical_columns if not is_binary(col)]
+binary_columns = [col for col in categorical_columns if df_cleaned[col].nunique() == 2]
+multi_category_columns = [col for col in categorical_columns if df_cleaned[col].nunique() > 2]
 
 # Apply Label Encoding to binary columns
 label_encoders = {}
 for col in binary_columns:
     le = LabelEncoder()
-    df[col] = le.fit_transform(df[col])
+    df_cleaned[col] = le.fit_transform(df_cleaned[col])
     label_encoders[col] = le
 
 # Apply One-Hot Encoding to multi-category columns
-df = pd.get_dummies(df, columns=multi_category_columns)
+df_encoded = pd.get_dummies(df_cleaned, columns=multi_category_columns)
 
-# Show the transformed data
-print(df.head())
+# Convert boolean values to integers (0 and 1)
+df_encoded = df_encoded.astype(int)
 
-# Optional: Save the preprocessed data to a new CSV file if needed
-df.to_csv('conv.csv', index=False)
+# Save the processed dataset
+df_encoded.to_csv('conv.csv', index=False)
+
+print(f"Processed dataset saved to: {'conv.csv'}")
