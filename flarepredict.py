@@ -7,7 +7,7 @@ model = joblib.load('rf_flare_predictor.pkl')
 
 # Load the columns from the preprocessed dataset (conv.csv)
 conv_df = pd.read_csv('conv.csv')
-model_columns = conv_df.columns  # These are the columns the model expects
+model_columns = conv_df.columns.drop('Time_Between_Flares') # These are the columns the model expects
 
 # Set up the Streamlit app
 st.title('Flare Prediction App')
