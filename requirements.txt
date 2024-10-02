@@ -17,7 +17,6 @@ Jinja2==3.1.4
 MarkupSafe==2.1.5
 numpy==2.1.1
 pandas==2.2.3
-PyAudio==0.2.12
 pycparser==2.21
 pyserial==3.5
 python-dateutil==2.9.0.post0
@@ -27,7 +26,6 @@ pytz==2024.2
 PyYAML==6.0.1
 reedsolo==1.7.0
 six==1.16.0
-SpeechRecognition==3.7.1
 tzdata==2024.2
 unicorn==2.0.1.post1
 Werkzeug==3.0.4
