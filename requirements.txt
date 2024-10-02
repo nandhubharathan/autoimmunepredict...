@@ -19,7 +19,6 @@ numpy==2.1.1
 pandas==2.2.3
 PyAudio==0.2.12
 pycparser==2.21
-pypiwin32==223
 pyserial==3.5
 python-dateutil==2.9.0.post0
 python-dotenv==1.0.1
