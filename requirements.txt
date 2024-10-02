@@ -14,7 +14,6 @@ Flask==3.0.3
 intelhex==2.3.0
 itsdangerous==2.2.0
 Jinja2==3.1.4
-joblib==1.4.2
 MarkupSafe==2.1.5
 numpy==2.1.1
 pandas==2.2.3
@@ -26,7 +25,6 @@ python-dateutil==2.9.0.post0
 python-dotenv==1.0.1
 pyttsx3==2.90
 pytz==2024.2
-pywin32==304
 PyYAML==6.0.1
 reedsolo==1.7.0
 six==1.16.0
@@ -34,3 +32,4 @@ SpeechRecognition==3.7.1
 tzdata==2024.2
 unicorn==2.0.1.post1
 Werkzeug==3.0.4
+
